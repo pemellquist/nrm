@@ -1,0 +1,1 @@
+curl -s localhost:8080/v1/vpc/$1 | python -m json.tool

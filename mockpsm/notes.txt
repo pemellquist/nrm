@@ -1,0 +1,69 @@
+PSM notes
+ 
+
+POST {{apibase}}/configs/network/v1/tenant/{{tenant}}/virtualrouters
+
+{
+
+    "kind": "VirtualRouter",
+
+    "api-version": "v1",
+
+    "meta": {
+
+        "name": "{{vpc}}",
+
+        "tenant": "{{tenant}}"
+
+    },
+
+    "spec": {
+
+      "type": "tenant",
+
+      "router-mac-address": "{{router-mac}}",
+
+      "vxlan-vni": {{vpc-vnid}},
+
+      "route-import-export": {
+
+            "address-family": "l2vpn-evpn",
+
+            "rd-auto": true,
+
+            "rt-export": [
+
+                  {
+
+                  "type": "type0",
+
+                  "admin-value": {{pod-as}},
+
+                  "assigned-value": {{vpc-assignvalue}}
+
+                  }
+
+            ],
+
+            "rt-import": [
+
+                  {
+
+                  "type": "type0",
+
+                  "admin-value": {{pod-as}},
+
+                  "assigned-value": {{vpc-assignvalue}}
+
+                  }
+
+            ]
+
+      }
+
+    }
+
+}
+
+List VPC
+GET {{api

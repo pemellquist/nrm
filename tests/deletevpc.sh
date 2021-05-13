@@ -1,0 +1,1 @@
+curl -X "DELETE" localhost:8080/v1/vpc/$1

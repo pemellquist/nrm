@@ -1,0 +1,19 @@
+GOCMD=go
+GOBUILD=$(GOCMD) build
+APP=nrmctl
+GOFMT=gofmt -w
+GOLINT=golint
+
+define makeit 
+	$(GOFMT) $(1)/*.go
+	$(GOLINT) $(1)/*.go
+	$(GOBUILD) $(1)/*.go
+endef
+
+
+build:
+	$(call makeit,cli)
+	$(GOBUILD)  
+
+clean:
+	rm -f $(APP)

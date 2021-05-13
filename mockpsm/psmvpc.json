@@ -1,0 +1,31 @@
+{
+  "kind": "VirtualRouter",
+  "api-version": "v1",
+  "meta": {
+    "name": "vpc",
+    "tenant": "tenant"
+  },
+  "spec": {
+    "type": "tenant",
+    "router-mac-address": "1234567890",
+    "vxlan-vni": "abcdefg",
+    "route-import-export": {
+      "address-family": "foo",
+      "rd-auto": true,
+      "rt-export": [
+        {
+          "type": "type0",
+          "admin-value": "foo",
+          "assigned-value": "foo"
+        }
+      ],
+      "rt-import": [
+        {
+          "type": "type0",
+          "admin-value": "foo",
+          "assigned-value": "foo"
+        }
+      ]
+    }
+  }
+}
