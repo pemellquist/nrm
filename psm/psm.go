@@ -2,6 +2,13 @@
 
 package psm
 
+// Login Request
+type Login struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Tenant   string `json:"tenant"`
+}
+
 // PMeta is meta data
 type PMeta struct {
 	Name   string `json:"name"`

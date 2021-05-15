@@ -2,4 +2,6 @@
 api_server_port: 8080
 sbapi: psm
 psm_base_url: localhost:8089
-global_tenant_id: 0123456789abcdef
+psm_tenant_id: default
+psm_username: admin
+psm_pwd: Pensando0$

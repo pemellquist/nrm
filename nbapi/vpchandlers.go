@@ -41,7 +41,7 @@ func init() {
 		if config.Config.SBAPI == "psm" {
 			glog.Info("using psm mode sbapi")
 			glog.Info("psm base url: " + config.Config.PSMBaseURL)
-			glog.Info("psm global tenantID: " + config.Config.PSMGlobalTenantID)
+			glog.Info("psm global tenantID: " + config.Config.PSMTenantID)
 			sb = sbapi.PSMImpl{}
 		} else {
 			glog.Error("nbapi not supported: " + config.Config.SBAPI)
@@ -183,9 +183,9 @@ func createVPC(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// look for global tenant ID override
-	if config.Config.PSMGlobalTenantID != "" {
-		glog.Info("over riding tenantId with global value: " + config.Config.PSMGlobalTenantID)
-		vpc.TenantID = config.Config.PSMGlobalTenantID
+	if config.Config.PSMTenantID != "" {
+		glog.Info("over riding tenantId with global value: " + config.Config.PSMTenantID)
+		vpc.TenantID = config.Config.PSMTenantID
 	}
 
 	// fill out creation fields

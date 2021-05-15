@@ -11,10 +11,12 @@ import (
 
 // NRMConfig is a representation of a config data for this service which is loaded
 type NRMConfig struct {
-	APIServerPort     int    `yaml:"api_server_port"`
-	SBAPI             string `yaml:"sbapi"`
-	PSMBaseURL        string `yaml:"psm_base_url"`
-	PSMGlobalTenantID string `yaml:"global_tenant_id"`
+	APIServerPort int    `yaml:"api_server_port"`
+	SBAPI         string `yaml:"sbapi"`
+	PSMBaseURL    string `yaml:"psm_base_url"`
+	PSMTenantID   string `yaml:"psm_tenant_id"`
+	PSMUserName   string `yaml:"psm_username"`
+	PSMUserPwd    string `yaml:"psm_pwd"`
 }
 
 var configfile = "config.yaml"

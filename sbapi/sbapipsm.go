@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"crypto/tls"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -20,9 +21,58 @@ import (
 type PSMImpl struct {
 }
 
+// login to the PSM to get an auth token
+func login() (string, error) {
+	glog.Info("log into psm")
+
+	var login psm.Login
+	login.Tenant = config.Config.PSMTenantID
+	login.Username = config.Config.PSMUserName
+	login.Password = config.Config.PSMUserPwd
+
+	// make request to PSM
+	request, err := json.Marshal(login)
+	if err != nil {
+		glog.Error(err)
+		return "", err
+	}
+
+	// post request to PSM
+	url := "https://" + config.Config.PSMBaseURL + "/v1/login"
+	glog.Info("psm login url: " + url)
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, // TODO: ignore certs for now
+	}
+	client := &http.Client{Transport: tr}
+	resp, err := client.Post(url, "application/json", bytes.NewBuffer(request))
+	if err != nil {
+		glog.Error(err)
+		return "", err
+	}
+
+	// check status code and read cookie
+	if resp.StatusCode != http.StatusOK {
+		glog.Error("psm login fail")
+		return "", errors.New("error status: " + resp.Status)
+	}
+
+	for _, cookie := range resp.Cookies() {
+		glog.Info("Found a cookie named:", cookie.Name)
+	}
+
+	return "", nil
+}
+
 // GetVPCs return list of created VPCs
 func (psmi PSMImpl) GetVPCs() ([]vpc.Vpc, error) {
 	vpcs := make([]vpc.Vpc, len(m), len(m))
+
+	sid, err := login()
+	if err != nil {
+		return vpcs, err
+	}
+
+	glog.Info(sid)
 
 	return vpcs, nil
 }
